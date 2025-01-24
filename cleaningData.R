@@ -33,7 +33,12 @@ data_programs = data_programs |>
   filter(!row_number() %in% c(70,71,72,73,74)) |>
   select(-`Sports Governing Body`)
 
-# write.csv(data_programs,"clean_program_data")
+# Remove data from before 1914 (1912 Olympics and earlier)
+
+data_programs = data_programs |>
+  select(-c('1896','1900','1904','1906*','1908','1912'))
+
+# write.csv(data_programs,"clean_program_data.csv")
   
 ############################################################
 
@@ -51,7 +56,7 @@ data_athletes = data_athletes |>
                         "Silver" = 2, 
                         "Gold" = 3))
 
-# write.csv(data_athletes,"clean_athletes_data")
+# write.csv(data_athletes,"clean_athletes_data.csv")
 
 ############################################################
 
@@ -60,6 +65,14 @@ data_athletes = data_athletes |>
 data_medal_counts = data_medal_counts |>
   mutate(NOC = str_trim(NOC))
 
-data_medal_counts
+#write.csv(data_medal_counts,"medal_counts.csv")
 
+
+############################################################
+
+## Get a list of all countries that participated in 2024
+
+countries2024 = unique(data_athletes$NOC[which(data_athletes$Year==2024)])
+
+#write.csv(countries2024,"countries2024.csv")
 
