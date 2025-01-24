@@ -32,6 +32,34 @@ for (colname in colnames(data_programs)) {
 data_programs = data_programs |>
   filter(!row_number() %in% c(70,71,72,73,74)) |>
   select(-`Sports Governing Body`)
+
+# write.csv(data_programs,"clean_program_data")
   
-##############################
+############################################################
+
+## Cleaning athlete data
+
+# data_athletes=data_athletes_raw
+
+data_athletes = data_athletes |>
+  select(-Team)
+
+data_athletes = data_athletes |>
+  mutate(Medal = recode(Medal, 
+                        "No medal" = 0, 
+                        "Bronze" = 1, 
+                        "Silver" = 2, 
+                        "Gold" = 3))
+
+# write.csv(data_athletes,"clean_athletes_data")
+
+############################################################
+
+## Cleaning hosts data
+
+data_medal_counts = data_medal_counts |>
+  mutate(NOC = str_trim(NOC))
+
+data_medal_counts
+
 
