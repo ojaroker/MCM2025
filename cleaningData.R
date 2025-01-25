@@ -46,8 +46,8 @@ data_programs = data_programs |>
 
 # data_athletes=data_athletes_raw
 
-data_athletes = data_athletes |>
-  select(-Team)
+# data_athletes = data_athletes |>
+#   select(-Team)
 
 data_athletes = data_athletes |>
   mutate(Medal = recode(Medal, 
@@ -70,6 +70,27 @@ data_medal_counts = data_medal_counts |>
 
 data_medal_counts = data_medal_counts |>
   filter(!row_number() %in% which(Year<1914))
+
+
+# "CHL" "CEY" "BWI" "NER" "IOP" "SVN" "TON" "BRB" "KWT" "ARE" "PRY" "SDN" "TGO" "BHR" "GRD" "BWA" "GTM" "FJI" "BFA"
+
+# replace BFA with BUR
+data_medal_counts$NOC[which(data_medal_counts$NOC=="BFA")]="BUR"
+
+# replace CHL with CHI
+data_medal_counts$NOC[which(data_medal_counts$NOC=="CHL")]="CHI"
+
+# replace CEY with SRI
+data_medal_counts$NOC[which(data_medal_counts$NOC=="CEY")]="SRI"
+
+# replace BWI with ANT
+data_medal_counts$NOC[which(data_medal_counts$NOC=="BWI")]="ANT"
+
+# replace EOR with ROT
+data_medal_counts$NOC[which(data_medal_counts$NOC=="EOR")]="ROT"
+
+
+# Taking too long. will just remove the 1 occurrence of the countries with old NOC codes in the firstMedals.R file
 
 #write.csv(data_medal_counts,"medal_counts.csv")
 
