@@ -56,14 +56,20 @@ data_athletes = data_athletes |>
                         "Silver" = 2, 
                         "Gold" = 3))
 
+data_athletes = data_athletes |>
+  filter(!row_number() %in% which(Year<1914))
+
 # write.csv(data_athletes,"clean_athletes_data.csv")
 
 ############################################################
 
-## Cleaning hosts data
+## Cleaning medal count data
 
 data_medal_counts = data_medal_counts |>
   mutate(NOC = str_trim(NOC))
+
+data_medal_counts = data_medal_counts |>
+  filter(!row_number() %in% which(Year<1914))
 
 #write.csv(data_medal_counts,"medal_counts.csv")
 
