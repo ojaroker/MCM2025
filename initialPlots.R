@@ -8,8 +8,8 @@ data_programs = read_csv(file="./clean_program_data.csv")
 
 # Plot number of competing athletes and countries over year
 
-competing_countries <- data_athletes %>%
-  group_by(Year) %>%
+competing_countries = data_athletes |>
+  group_by(Year) |>
   summarise(numCountries = n_distinct(NOC), .groups = "drop")
 
 competing_athletes = data_athletes |>

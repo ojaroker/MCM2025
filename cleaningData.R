@@ -1,11 +1,9 @@
 library(tidyverse)
-library(ggplot2)
 
 data_athletes_raw = read_csv(file="./2025_Problem_C_Data/summerOly_athletes.csv")
 data_hosts_raw = read_csv(file="./2025_Problem_C_Data/summerOly_hosts.csv")
 data_medal_counts_raw = read_csv(file="./2025_Problem_C_Data/summerOly_medal_counts.csv")
 data_programs_raw = read_csv(file="./2025_Problem_C_Data/summerOly_programs.csv")
-
 
 ## Cleaning data_programs
 
@@ -21,10 +19,10 @@ data_programs$Code[40]="JUEDEPAUME"
 data_programs$'1896'[c(50,53)]=0
 for (colname in colnames(data_programs)) {
   # Replace weird characters with 0
-  data_programs[[colname]][data_programs[[colname]] == "\x95"] <- 0
+  data_programs[[colname]][data_programs[[colname]] == "\x95"] = 0
   
   # Remove NAs if needed (e.g., replace with 0 or other strategy)
-  data_programs[[colname]][is.na(data_programs[[colname]])] <- 0
+  data_programs[[colname]][is.na(data_programs[[colname]])] = 0
 }
 
 # Remove skating and ice hockey
@@ -45,9 +43,6 @@ data_programs = data_programs |>
 ## Cleaning athlete data
 
 # data_athletes=data_athletes_raw
-
-# data_athletes = data_athletes |>
-#   select(-Team)
 
 data_athletes = data_athletes |>
   mutate(Medal = recode(Medal, 
@@ -71,7 +66,6 @@ data_medal_counts = data_medal_counts |>
 data_medal_counts = data_medal_counts |>
   filter(!row_number() %in% which(Year<1914))
 
-
 # "CHL" "CEY" "BWI" "NER" "IOP" "SVN" "TON" "BRB" "KWT" "ARE" "PRY" "SDN" "TGO" "BHR" "GRD" "BWA" "GTM" "FJI" "BFA"
 
 # replace BFA with BUR
@@ -88,7 +82,6 @@ data_medal_counts$NOC[which(data_medal_counts$NOC=="BWI")]="ANT"
 
 # replace EOR with ROT
 data_medal_counts$NOC[which(data_medal_counts$NOC=="EOR")]="ROT"
-
 
 # Taking too long. will just remove the 1 occurrence of the countries with old NOC codes in the firstMedals.R file
 
